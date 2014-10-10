@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 public class CalculateNumber {
 	public int numberAtPosition = 0;
 	public int counter = 0;
@@ -18,11 +17,14 @@ public class CalculateNumber {
 			storage = (numberAtPosition)/(int) Math.pow(10, i-1);
 			finalNumber = finalNumber + (storage * storage);
 		}
+		if (counter == 0) {
+			System.out.print(userNumber + ", ");
+		}
 		numberBank.add(counter, finalNumber);
 		counter++;
 		for (int i = 0; i < numberBank.size(); i++) {
 			int checkNumber = numberBank.get(i);
-			for (int j = 1; j < numberBank.size(); j++) {
+			for (int j = 1; j < i; j++) {
 				int checkNumber2 = numberBank.get(j);
 				if (checkNumber == checkNumber2) {
 					fail = true;
