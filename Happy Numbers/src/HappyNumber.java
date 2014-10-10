@@ -12,5 +12,9 @@ public class HappyNumber {
 		System.out.println("Please enter a number to check if it's happy or not.");
 		Scanner scan = new Scanner(System.in);
 		userInput = scan.nextInt();
+		while (userInput < 0) {
+			System.out.println("Please enter a positive integer!");
+			userInput = scan.nextInt();
+		}
 	}
 }
