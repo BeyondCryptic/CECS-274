@@ -10,7 +10,7 @@ public class Queue {
 	public void enqueue(String myString) {
 		myList.addLast(myString);
 	}
-	public String dequeue(String myString) {
+	public String dequeue() {
 		return myList.removeFirst();
 	}
 }
