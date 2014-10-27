@@ -9,9 +9,11 @@ public class Queue {
 		myList = new LinkedList<String>();
 	}
 	public void enqueue(String myString) {
+		count++;
 		myList.addLast(myString);
 	}
 	public String dequeue() {
+		count--;
 		return myList.removeFirst();
 	}
 	public int getCount() {
