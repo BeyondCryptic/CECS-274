@@ -16,6 +16,9 @@ public class Stack {
 		counter--;
 		return myList.removeLast();
 	}
+	public String viewTop() {
+		return myList.getFirst();
+	}
 	public int getCount() {
 		return counter;
 	}
