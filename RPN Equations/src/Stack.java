@@ -14,7 +14,7 @@ public class Stack {
 	}
 	public String pop() {
 		counter--;
-		return myList.removeFirst();
+		return myList.removeLast();
 	}
 	public String viewTop() {
 		return myList.getFirst();
