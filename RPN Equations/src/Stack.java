@@ -16,4 +16,7 @@ public class Stack {
 		counter--;
 		return myList.removeLast();
 	}
+	public int getCount() {
+		return counter;
+	}
 }
