@@ -3,25 +3,23 @@ import java.util.Scanner;
 
 public class RPNEquation {
 	
-	public static Stack myStack;
-	public static Queue myQueue;
 	public static RPNSolver solver;
 	public static int operatorCounter = 0;
 	public static int operandCounter = 0;
+	public static String userFormula = "";
 	public static ArrayList<String> finalFormula;
 	
 	
 	public static void main(String[] args) {
-		myStack = new Stack();
-		myQueue = new Queue();
 		solver = new RPNSolver();
 		finalFormula = new ArrayList<String>();
 		askUser();
+		displayData();
 	}
 	public static void askUser() {
 		Scanner scan = new Scanner(System.in);
 		System.out.print("Please enter an infix formula you want to calculate: ");
-		String userFormula = scan.nextLine() + " ";
+		userFormula = scan.nextLine() + " ";
 		String[] formula = userFormula.split("");
 		int counter = 0;
 		for (int i = 1; i < formula.length; i++) {
@@ -61,6 +59,7 @@ public class RPNEquation {
 		}
 		processData(finalFormula);
 	}
+	
 	public static void processData(ArrayList<String> stringArray) {
 		for (int i = 0; i < stringArray.size(); i++) {
 			if (stringArray.get(i).equals("(") || stringArray.get(i).equals(")") ||
@@ -75,11 +74,16 @@ public class RPNEquation {
 				operandCounter++;
 			}
 		}
-		System.out.println("Number of operators (symbols): " + operatorCounter);
-		System.out.println("Number of operands (numbers): " + operandCounter);
+		//System.out.println("Number of operators (symbols): " + operatorCounter);
+		//System.out.println("Number of operands (numbers): " + operandCounter);
 		if (operatorCounter >= operandCounter) {
 			System.out.println("Error, invalid formula! There are too many operators!");
 			System.exit(0);
 		}
+	}
+	
+	public static void displayData() {
+		System.out.println("Infix notation: " + userFormula);
+		System.out.println("Postfix notation: " + solver.convertToPost(finalFormula));
 	}
 }
