@@ -22,4 +22,7 @@ public class Stack {
 	public int getCount() {
 		return counter;
 	}
+	public String view() {
+		return myList.toString();
+	}
 }
