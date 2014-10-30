@@ -54,9 +54,34 @@ public class RPNEquation {
 			}
 			counter = 1;
 		}
-		for (int i = 0; i < finalFormula.size(); i++) {
-			System.out.println(finalFormula.get(i));
+		// Below processes the formula to see if there are any negative signs that mean a negative number instead of minus that number.
+		// Example: 2+-3 should be 2 + (-3).
+		// Uses regex, "\\d+$".
+		// \\d means all digits, 0-9.
+		// + means include previous items (digits in this case).
+		// $ means until the end of the line (all of the digits in this case).
+		if (finalFormula.get(0).equals("")) {
+			finalFormula.remove(0);
+			String temp = finalFormula.get(1);
+			temp = "-" + temp;
+			finalFormula.remove(0);
+			finalFormula.remove(0);
+			finalFormula.add(0, temp);
 		}
+		for (int i = 0; i < finalFormula.size(); i++) {
+			if (finalFormula.get(i).equals("^") ||
+				finalFormula.get(i).equals("*") || finalFormula.get(i).equals("/") ||
+				finalFormula.get(i).equals("-") || finalFormula.get(i).equals("+")) {
+				if (finalFormula.get(i+1).equals("-") && finalFormula.get(i+2).matches("\\d+$")) {
+					String temp = finalFormula.get(i+2);
+					temp = "-" + temp;
+					finalFormula.remove(i+1);
+					finalFormula.remove(i+1);
+					finalFormula.add(i+1, temp);
+				}
+			}
+		}
+		System.out.println(finalFormula);
 		processData(finalFormula);
 	}
 	
@@ -84,6 +109,15 @@ public class RPNEquation {
 	
 	public static void displayData() {
 		System.out.println("Infix notation: " + userFormula);
-		System.out.println("Postfix notation: " + solver.convertToPost(finalFormula));
+		ArrayList<String> postfixFormula = solver.convertToPost(finalFormula);
+		String postfixNotation = "";
+		for (int i = 0; i < postfixFormula.size(); i++) {
+			postfixNotation = postfixNotation + postfixFormula.get(i);
+			if (i < postfixFormula.size()-1) {
+				postfixNotation = postfixNotation + " ";
+			}
+		}
+		System.out.println("Postfix notation: " + postfixNotation);
+		
 	}
 }
