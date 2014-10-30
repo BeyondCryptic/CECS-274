@@ -78,23 +78,23 @@ public class RPNSolver {
 	public String doMath(double opTwo, double opOne, String operator) {
 		double answer = 0;
 		if (operator.equals("+")) {
-			System.out.print(opOne + " + " + opTwo + " = ");
+			//System.out.print(opOne + " + " + opTwo + " = ");
 			answer = opOne + opTwo;
 		} else if (operator.equals("-")) {
-			System.out.println(opOne + " - " + opTwo + " = ");
+			//System.out.println(opOne + " - " + opTwo + " = ");
 			answer = opOne - opTwo;
 		} else if (operator.equals("*")) {
-			System.out.println(opOne + " * " + opTwo + " = ");
+			//System.out.println(opOne + " * " + opTwo + " = ");
 			answer = opOne * opTwo;
 		} else if (operator.equals("/")) {
-			System.out.println(opOne + " / " + opTwo + " = ");
+			//System.out.println(opOne + " / " + opTwo + " = ");
 			answer = opOne / opTwo;
 		} else if (operator.equals("^")) {
-			System.out.println(opOne + " ^ " + opTwo + " = ");
+			//System.out.println(opOne + " ^ " + opTwo + " = ");
 			answer = Math.pow(opOne, opTwo);
 		}
 		String answerInString = String.valueOf(answer);
-		System.out.println(answerInString);
+		//System.out.println(answerInString);
 		return answerInString;
 	}
 	public double solveRPN(ArrayList<String> postfixFormula) {
@@ -102,29 +102,29 @@ public class RPNSolver {
 		Stack operandStack = new Stack();
 		double answer = 0;
 		
-		System.out.println(postfixFormula);
+		//System.out.println(postfixFormula);
 		
 		for (int i = 0; i < postfixFormula.size(); i++) {
-			System.out.println("Operator Stack: " + operatorStack.view());
-			System.out.println("Operand Stack: " + operandStack.view());
+			//System.out.println("Operator Stack: " + operatorStack.view());
+			//System.out.println("Operand Stack: " + operandStack.view());
 			if (postfixFormula.get(i).equals("^") ||
 				postfixFormula.get(i).equals("*") || postfixFormula.get(i).equals("/") ||
 				postfixFormula.get(i).equals("-") || postfixFormula.get(i).equals("+")) {
 				operatorStack.push(postfixFormula.get(i));
 				if (operatorStack.getCount() >= 1 && operandStack.getCount() >= 2) {
 					while (operatorStack.getCount() != 0) {
-						System.out.println("Operator Stack (before math): " + operatorStack.view());
-						System.out.println("Operand Stack (before math): " + operandStack.view());
+						//System.out.println("Operator Stack (before math): " + operatorStack.view());
+						//System.out.println("Operand Stack (before math): " + operandStack.view());
 						operandStack.push(doMath(Double.parseDouble(operandStack.pop()), Double.parseDouble(operandStack.pop()), operatorStack.pop()));
-						System.out.println("Operator Stack (after math): " + operatorStack.view());
-						System.out.println("Operand Stack (after math): " + operandStack.view());
+						//System.out.println("Operator Stack (after math): " + operatorStack.view());
+						//System.out.println("Operand Stack (after math): " + operandStack.view());
 					}
 				}
 			} else {
 				operandStack.push(postfixFormula.get(i));
 			}
-			System.out.println("Operator Stack (after): " + operatorStack.view());
-			System.out.println("Operand Stack (after): " + operandStack.view());
+			//System.out.println("Operator Stack (after): " + operatorStack.view());
+			//System.out.println("Operand Stack (after): " + operandStack.view());
 		}
 		answer = Double.parseDouble(operandStack.viewTop());
 		return answer;
