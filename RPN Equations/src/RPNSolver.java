@@ -17,11 +17,11 @@ public class RPNSolver {
 	}
 	public int operatorValue(String operator) {
 		int value = 0;
-		/*if (operator.equals("(")) {
+		if (operator.equals("(")) {
 			value = 4;
 		} else if (operator.equals(")")) {
 			value = 4;
-		} else */if (operator.equals("^")) {
+		} else if (operator.equals("^")) {
 			value = 3;
 		} else if (operator.equals("*")) {
 			value = 2;
@@ -34,81 +34,53 @@ public class RPNSolver {
 		}
 		return value;
 	}
-	public String convertToPost(ArrayList<String> formula) {
-		String postfixNotation = "";
-		for (int i = 0; i < formula.size(); i++) {
-			if (formula.get(i).equals("(")) {
-				numOfParenthesis++;
-			}
-		}
-		parenthesisLoc = new int[numOfParenthesis];
-		counterDB = new int[numOfParenthesis];
-		for (int x = 0; x < counterDB.length; x++) {
-			counterDB[x] = 0;
-		}
+	public ArrayList<String> convertToPost(ArrayList<String> formula) {
+		ArrayList<String> postfixNotation = new ArrayList<String>();
+		//4+(2-3*(4*3-4)) = 4 2 3 4 3 * 4 - * - +
+		//4+(2-3*(4*3-4*6*7-4)) = 4 2 3 4 3 * 4 6 * 7 * - 4 - * - +
 		for (int i = 0; i < formula.size(); i++) {
 			//System.out.println("The current item is: " + formula.get(i));
+			//System.out.println("Items in Stack: " + myStack.view());
+			//System.out.println("Items in Queue: " + myQueue.view());
 			if (formula.get(i).equals("(") || formula.get(i).equals(")") ||
 				formula.get(i).equals("^") ||
 				formula.get(i).equals("*") || formula.get(i).equals("/") ||
 				formula.get(i).equals("-") || formula.get(i).equals("+")) {
-				if (formula.get(i).equals("(")) {
-					parenthesisLoc[parenthesisCount] = i;
-					if (parenthesisCount < parenthesisLoc.length-1 && parenthesisCount != 0) {
-						parenthesisCount++;
-					}
-					//System.out.println("Current count: " + parenthesisCount);
-					//System.out.println("Location of current parenthesis: " + i);
-				}
-				if (formula.get(i).equals(")")) {
-					parenthesisLoc[parenthesisCount] = -1;
-					if (parenthesisCount != 0) {
-						parenthesisCount--;
-					}
-					for (int j = 0; j < counterDB[parenthesisCount]; j++) {
+				if (myStack.getCount() == 0) {
+					myStack.push(formula.get(i));
+				} else if (formula.get(i).equals("(")) {
+					myStack.push(formula.get(i)); // Creates a "mini-stack".
+				} else if (formula.get(i).equals(")")) {
+					while (!myStack.viewTop().equals("(")) {
 						myQueue.enqueue(myStack.pop());
 					}
-					counterDB[parenthesisCount] = 0;
-				}
-				if (parenthesisLoc[parenthesisCount] != -1 && formula.get(i).equals("(")) {
-					int counterForParenthesis = counterDB[parenthesisCount];
-					counterForParenthesis++;
-					counterDB[parenthesisCount] = counterForParenthesis;
-					/*for (int x = 0; x < counterDB.length; x++) {
-						System.out.println("Counter for items inside parenthesis: " + counterDB[x]);
-					}*/
-				}
-				if (myStack.getCount() >= 1 && !formula.get(i).equals("(") && !formula.get(i).equals(")")) {
-					if (operatorValue(formula.get(i)) >= operatorValue(myStack.viewTop()) && !formula.get(i).equals(")")) {
-						myStack.push(formula.get(i));
-					} else if (!formula.get(i).equals("(") && !formula.get(i).equals(")")){
-						if ((operatorValue(formula.get(i)) < operatorValue(myStack.viewTop())) && myStack.getCount() != 0 && !formula.get(i).equals(")")) {
-							myQueue.enqueue(myStack.pop());
-							i--;
-						}
-					}
-				} else if (!formula.get(i).equals("(") && !formula.get(i).equals(")")){
+					myStack.pop(); // Gets rid of "(" after finishing off mini-stack.
+				} else if (operatorValue(formula.get(i)) > operatorValue(myStack.viewTop()) && !myStack.viewTop().equals("(")) {						
 					myStack.push(formula.get(i));
+				} else if (operatorValue(formula.get(i)) <= operatorValue(myStack.viewTop()) && !myStack.viewTop().equals(")")) {
+					if (myStack.viewTop().equals("(")) {
+						myStack.push(formula.get(i));
+					} else {
+						myQueue.enqueue(myStack.pop());
+						i--;
+					}
 				}
-			} else if (!formula.get(i).equals("(") && !formula.get(i).equals(")")){
+			} else {
 				myQueue.enqueue(formula.get(i));
 			}
 		}
-		int stackSize = myStack.getCount();
-		for (int i = 0; i < stackSize; i++) {
-			myQueue.enqueue(myStack.pop());
-			//System.out.println("Stack Size: " + myStack.getCount());
-			//System.out.println("Items in Stack: " + myStack.view());
-		}
-		int queueSize = myQueue.getCount();
-		for (int i = 0; i < queueSize; i++) {
-			postfixNotation = postfixNotation + myQueue.dequeue();
-			//System.out.println("Queue Size: " + myQueue.getCount());
-			//System.out.println("Items in Queue: " + myQueue.view());
-			if (i < queueSize-1) {
-				postfixNotation = postfixNotation + " ";
+		int stackCount = myStack.getCount();
+		for (int i = 0; i < stackCount; i++) {
+			if (!myStack.viewTop().equals("(")) {
+				myQueue.enqueue(myStack.pop());
 			}
 		}
+		int queueCount = myQueue.getCount();
+		for (int i = 0; i < queueCount; i++) {
+			postfixNotation.add(myQueue.dequeue());
+		}
+		//System.out.println("Final Stack: " + myStack.view());
+		//System.out.println("Final Queue: " + myQueue.view());
 		return postfixNotation;
 	}
 }
