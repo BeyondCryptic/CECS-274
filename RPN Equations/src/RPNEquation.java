@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class RPNEquation {
@@ -13,13 +14,26 @@ public class RPNEquation {
 	public static void main(String[] args) {
 		solver = new RPNSolver();
 		finalFormula = new ArrayList<String>();
+		/*String[] test = "-1.2+(2*5-3/5+(3*(3-5^5)))".split("[\\s\\(\\)\\*\\/\\^+-]+");
+		for (int i = 0; i < test.length; i++) {
+			System.out.println(test[i]);
+		}*/
 		askUser();
 		displayData();
 	}
 	public static void askUser() {
 		Scanner scan = new Scanner(System.in);
 		System.out.print("Please enter an infix formula you want to calculate: ");
-		userFormula = scan.nextLine() + " ";
+		
+		userFormula = scan.nextLine();
+		String[] formula = userFormula.split("\\s");
+		
+		System.out.println(Arrays.asList(formula));
+		
+		for (int i = 0; i < formula.length; i++) {
+			finalFormula.add(formula[i]);
+		}
+		/*userFormula = scan.nextLine() + " ";
 		String[] formula = userFormula.split("");
 		int counter = 0;
 		for (int i = 1; i < formula.length; i++) {
@@ -54,12 +68,14 @@ public class RPNEquation {
 			}
 			counter = 1;
 		}
+		// Does not work if formula is too short!
 		// Below processes the formula to see if there are any negative signs that mean a negative number instead of minus that number.
 		// Example: 2+-3 should be 2 + (-3).
 		// Uses regex, "\\d+$".
 		// \\d means all digits, 0-9.
 		// + means include previous items (digits in this case).
 		// $ means until the end of the line (all of the digits in this case).
+		System.out.println(finalFormula);
 		if (finalFormula.get(0).equals("")) {
 			finalFormula.remove(0);
 			String temp = finalFormula.get(1);
@@ -67,8 +83,20 @@ public class RPNEquation {
 			finalFormula.remove(0);
 			finalFormula.remove(0);
 			finalFormula.add(0, temp);
-		}
-		for (int i = 0; i < finalFormula.size(); i++) {
+		}*/
+		// Fail attempt at getting decimals to work...
+		/*for (int i = 0; i < finalFormula.size(); i++) {
+			if (finalFormula.get(i).matches("\\d+$")) {
+				if (finalFormula.get(i+1).equals(".") && finalFormula.get(i+2).matches("\\d+$")) {
+					String temp = finalFormula.get(i+2);
+					temp = "-" + temp;
+					finalFormula.remove(i+1);
+					finalFormula.remove(i+1);
+					finalFormula.add(i+1, temp);
+				}
+			}
+		}*/
+		/*for (int i = 0; i < finalFormula.size(); i++) {
 			if (finalFormula.get(i).equals("^") ||
 				finalFormula.get(i).equals("*") || finalFormula.get(i).equals("/") ||
 				finalFormula.get(i).equals("-") || finalFormula.get(i).equals("+")) {
@@ -80,7 +108,7 @@ public class RPNEquation {
 					finalFormula.add(i+1, temp);
 				}
 			}
-		}
+		}*/
 		System.out.println(finalFormula);
 		processData(finalFormula);
 	}
@@ -117,7 +145,8 @@ public class RPNEquation {
 				postfixNotation = postfixNotation + " ";
 			}
 		}
+		double answer = solver.solveRPN(postfixFormula);
 		System.out.println("Postfix notation: " + postfixNotation);
-		
+		System.out.println("Answer: " + answer);
 	}
 }
