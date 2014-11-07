@@ -28,7 +28,7 @@ public class RPNEquation {
 		userFormula = scan.nextLine();
 		String[] formula = userFormula.split("\\s");
 		
-		System.out.println(Arrays.asList(formula));
+		//System.out.println(Arrays.asList(formula));
 		
 		for (int i = 0; i < formula.length; i++) {
 			finalFormula.add(formula[i]);
@@ -109,7 +109,7 @@ public class RPNEquation {
 				}
 			}
 		}*/
-		System.out.println(finalFormula);
+		//System.out.println(finalFormula);
 		processData(finalFormula);
 	}
 	
