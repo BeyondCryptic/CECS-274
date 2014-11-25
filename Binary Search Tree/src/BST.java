@@ -19,19 +19,10 @@ public class BST {
 		scan = new Scanner(System.in);
 		scan2 = new Scanner(System.in);
 		root = null;
-		//numberEntered = new ArrayList<Integer>();
 		numberInTree = 0;
 		found = false;
 		foundDel = false;
 		foundDelAction = false;
-		addToBST(5);
-		addToBST(10);
-		addToBST(8);
-		addToBST(7);
-		addToBST(9);
-		addToBST(22);
-		addToBST(11);
-		addToBST(25);
 		askUser();
 	}
 	
@@ -79,7 +70,6 @@ public class BST {
 		boolean exitWhile = false;
 		if (root == null) {
 			root = aNode;
-			rootValue = root.getValue();
 			numberInTree++;
 		} else {
 			if (root.getValue() > userNum) {
@@ -239,6 +229,7 @@ public class BST {
 	}
 	
 	public static void displayStatistics() {
+		rootValue = root.getValue();
 		System.out.println("Root Value: " + rootValue);
 		System.out.println("Depth of Tree: " + getLevel(root));
 		System.out.println("Number of Items in Tree: " + numberInTree);
@@ -278,6 +269,7 @@ public class BST {
 				if (userNode.getNextLeft().getNextRight() == null) {
 					Node temp = userNode.getNextLeft().getNextLeft();
 					userNode.setRight(temp);
+					numberInTree--;
 					foundDelAction = true;
 					System.out.println("Item deleted.");
 				}
@@ -285,6 +277,7 @@ public class BST {
 				if (userNode.getNextLeft().getNextRight() != null) {
 					Node temp = userNode.getNextLeft().getNextRight();
 					userNode.setRight(temp);
+					numberInTree--;
 					foundDelAction = true;
 					System.out.println("Item deleted.");
 				}
@@ -295,6 +288,7 @@ public class BST {
 				if (userNode.getNextRight().getNextRight() == null) {
 					Node temp = userNode.getNextRight().getNextLeft();
 					userNode.setRight(temp);
+					numberInTree--;
 					foundDelAction = true;
 					System.out.println("Item deleted.");
 				}
@@ -302,6 +296,7 @@ public class BST {
 				if (userNode.getNextRight().getNextRight() != null) {
 					Node temp = userNode.getNextRight().getNextRight();
 					userNode.setRight(temp);
+					numberInTree--;
 					foundDelAction = true;
 					System.out.println("Item deleted.");
 				}
