@@ -187,11 +187,18 @@ public class BST {
 	}
 	
 	public static void deleteFromBST() {
+		rootValue = root.getValue();
 		System.out.println("What would you like to delete?");
 		int findThis = scan2.nextInt();
 		foundDel = false;
 		foundDelAction = false;
-		deleteThisItem(root, findThis);
+		if(findThis == rootValue && root.getNextLeft() == null && root.getNextRight() == null) {
+			root = null;
+			System.out.println("Item deleted.");
+			foundDelAction = true;
+		} else {
+			deleteThisItem(root, findThis);
+		}
 		if (foundDelAction == false) {
 			System.out.println("The number could not be found.");
 		}
@@ -219,6 +226,10 @@ public class BST {
 	}
 	
 	public static void listContents(Node myNode) {
+		if (root == null) {
+			System.out.println("Tree is empty.");
+			return;
+		}
 		if (myNode.getNextLeft() != null) {
 			listContents(myNode.getNextLeft());
 		}
@@ -238,6 +249,7 @@ public class BST {
 	public static void findThisItem(Node userNode, int userNumber, int level) {
 		int onLevel = level + 1;
 		if (userNode.getValue() == userNumber) {
+			//onLevel--;
 			System.out.println("Item is on level: " + onLevel);
 			found = true;
 		}
