@@ -194,6 +194,7 @@ public class BST {
 		foundDelAction = false;
 		if(findThis == rootValue && root.getNextLeft() == null && root.getNextRight() == null) {
 			root = null;
+			numberInTree--;
 			System.out.println("Item deleted.");
 			foundDelAction = true;
 		} else {
@@ -240,10 +241,17 @@ public class BST {
 	}
 	
 	public static void displayStatistics() {
-		rootValue = root.getValue();
-		System.out.println("Root Value: " + rootValue);
-		System.out.println("Depth of Tree: " + getLevel(root));
-		System.out.println("Number of Items in Tree: " + numberInTree);
+		if (root != null) {
+			rootValue = root.getValue();
+			System.out.println("Root Value: " + rootValue);
+			System.out.println("Depth of Tree: " + getLevel(root));
+			System.out.println("Number of Items in Tree: " + numberInTree);
+		} else {
+			System.out.println("Tree is empty.");
+			System.out.println("Root Value: Tree is empty.");
+			System.out.println("Depth of Tree: 0, Tree is empty.");
+			System.out.println("Number of Items in Tree: " + numberInTree);
+		}
 	}
 
 	public static void findThisItem(Node userNode, int userNumber, int level) {
