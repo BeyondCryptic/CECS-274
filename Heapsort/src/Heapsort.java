@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Heapsort {
 	public static Scanner scan;
 	public static int[] aTree;
+	public static int[] originalTree;
 	public static int numberInTree;
 	
 	public static void main(String[] args) {
@@ -40,6 +41,10 @@ public class Heapsort {
 			aTree[i] = randomNumbers.get(i);
 		}
 		System.out.println("Array: " + randomNumbers);
+		originalTree = new int[aTree.length-1];
+		for (int i = 0; i < originalTree.length; i++) {
+			originalTree[i] = aTree[i+1];
+		}
 		viewTree(aTree);
 		System.out.println("Press any key to continue...");
 		if (!scan.nextLine().equals("©")) {
@@ -117,7 +122,7 @@ public class Heapsort {
 		for (int i = 0; i < sortedTree.length; i++) {
 			sortedTree[i] = anArray[i+1];
 		}
-		System.out.println("\nWe are done! The sorted tree is: \n" + Arrays.toString(sortedTree));
+		System.out.println("\nWe are done!\nThe sorted tree is: \n" + Arrays.toString(sortedTree) + "\nThe original tree is: \n" + Arrays.toString(originalTree));
 	}
 	
 	public static void viewTree(int[] anArray) {
