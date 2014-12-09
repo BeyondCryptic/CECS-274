@@ -68,7 +68,7 @@ public class Heapsort {
 	
 	public static void heapifyTree(int[] anArray) {
 		numberInTree = anArray.length-1;
-		for (int i = numberInTree/2; i >= 0; i--) {
+		for (int i = numberInTree/2; i >= 1; i--) {
 			heapifyBottomToTop(anArray, i);
 		}
 		System.out.println("We are done \"heapifying\" the tree. We will now \"Heapsort\" the tree.");
@@ -83,7 +83,7 @@ public class Heapsort {
 	
 	public static void heapifyTreeSilent(int[] anArray) {
 		numberInTree = anArray.length-1;
-		for (int i = numberInTree/2; i >= 0; i--) {
+		for (int i = numberInTree/2; i >= 1; i--) {
 			heapifyBottomToTop(anArray, i);
 		}
 	}
@@ -113,10 +113,10 @@ public class Heapsort {
 	
 	public static void doSort(int[] anArray) {
 		heapifyTreeSilent(anArray);
-		for (int i = numberInTree; i > 0; i--) {
-			doSwap(anArray, 0, i);
+		for (int i = numberInTree; i > 1; i--) {
+			doSwap(anArray, 1, i);
 			numberInTree = numberInTree-1;
-			heapifyBottomToTop(anArray, 0);
+			heapifyBottomToTop(anArray, 1);
 		}
 		int[] sortedTree = new int[anArray.length-1];
 		for (int i = 0; i < sortedTree.length; i++) {
