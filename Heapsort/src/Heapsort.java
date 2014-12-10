@@ -74,7 +74,7 @@ public class Heapsort {
 		System.out.println("We are done \"heapifying\" the tree. We will now \"Heapsort\" the tree.");
 		System.out.println("Press any key to continue...");
 		if (!scan.nextLine().equals("©")) {
-			doSort(aTree);
+			doSort(anArray);
 		} else {
 			System.out.println("Wow, how did you find that out?!");
 			System.exit(0);
